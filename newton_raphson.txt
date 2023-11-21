@@ -1,0 +1,30 @@
+function [raiz, tabla] = newton_raphson(func, dfunc, x0, tol, max_iter)
+    % Inicialización de variables
+    x = x0;
+    iter = 0;
+    tabla = [];
+
+    while iter < max_iter
+        % Cálculo del valor de la función y su derivada en el punto x
+        fx = func(x);
+        dfx = dfunc(x);
+
+        % Almacenamiento del valor de x y f(x) en la tabla
+        tabla = [tabla; x fx];
+
+        % Cálculo del nuevo valor de x
+        x_new = x - fx/dfx;
+
+        % Comprobación de la condición de parada
+        if abs(x_new - x) < tol
+            raiz = x_new;
+            return;
+        end
+
+        % Actualización de variables para la siguiente iteración
+        x = x_new;
+        iter = iter + 1;
+    end
+
+    error('El método de Newton-Raphson no convergió');
+end
